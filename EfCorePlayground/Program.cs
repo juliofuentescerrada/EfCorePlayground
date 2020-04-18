@@ -35,7 +35,7 @@
 
             product.AddImage(new ImageUrl("foo"));
 
-            product.SetTags(Tag.New, Tag.Refurbished, Tag.Used);
+            product.Tag(Tag.New, Tag.Refurbished, Tag.Used, Tag.New, Tag.Refurbished);
 
             context.Products.Add(product);
 
@@ -52,7 +52,7 @@
 
             product.AddImage(new ImageUrl("foo"));
 
-            product.SetTags(Tag.New);
+            product.Tag(Tag.New, Tag.New);
 
             product.Rate(new Rating(10));
 

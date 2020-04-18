@@ -7,8 +7,8 @@
     {
         private ProductDetails _details;
         private Rating _rating;
-        private ICollection<ImageUrl> _images = new List<ImageUrl>();
-        private Tags _tags;
+        private ICollection<ImageUrl> _images = new HashSet<ImageUrl>();
+        private ICollection<Tag> _tags = new HashSet<Tag>();
 
         private Product() { }
 
@@ -24,7 +24,7 @@
 
         public override string ToString()
         {
-            return $"{Id} - {_details}: Rating {_rating}";
+            return $"{Id} - {_details}: Rating {_rating}. Tags: {_tags}";
         }
 
         public void UpdateDetails(ProductDetails details)
@@ -37,9 +37,9 @@
             _images.Add(imageUrl);
         }
 
-        public void SetTags(params Tag[] tags)
+        public void Tag(params Tag[] tags)
         {
-            _tags = new Tags(tags);
+            _tags = new HashSet<Tag>(tags);
         }
 
         public void Rate(Rating rating)
