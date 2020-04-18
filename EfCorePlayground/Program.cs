@@ -19,7 +19,7 @@
 
             var details = new ProductDetails(new Name("Name"), null);
 
-            var newProduct = Product.Create(productId, details, new Rating(null));
+            var newProduct = Product.Create(productId, details, null);
 
             newProduct.AddImage(new ImageUrl("foo"));
 
