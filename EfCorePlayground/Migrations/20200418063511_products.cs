@@ -15,7 +15,8 @@ namespace EfCorePlayground.Migrations
                 {
                     Id = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    Rating = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -17,9 +17,9 @@
 
             var productId = GetNextProductId(context);
 
-            var details = new ProductDetails(new Name("Name"), new Description("Description"));
+            var details = new ProductDetails(new Name("Name"), null);
 
-            var newProduct = Product.Create(productId, details);
+            var newProduct = Product.Create(productId, details, new Rating(null));
 
             newProduct.AddImage(new ImageUrl("foo"));
 
