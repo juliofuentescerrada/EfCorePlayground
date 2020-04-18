@@ -12,24 +12,51 @@
         public static void Main(string[] args)
         {
             using var context = new CatalogDbContext();
-
             CatalogDbContextDbContextInitializer.Seed(context);
 
+            var id = CreateProduct(context);
+
+            ListProducts(context);
+
+            UpdateProduct(id, context);
+
+            ListProducts(context);
+
+            Console.Read();
+        }
+
+        private static ProductId CreateProduct(CatalogDbContext context)
+        {
             var productId = GetNextProductId(context);
 
             var details = new ProductDetails(new Name("Name"), null);
 
-            var newProduct = Product.Create(productId, details, null);
+            var product = Product.Create(productId, details, new Rating(null));
 
-            newProduct.AddImage(new ImageUrl("foo"));
+            product.AddImage(new ImageUrl("foo"));
 
-            newProduct.SetTags(Tag.New, Tag.Refurbished, Tag.Used);
+            product.SetTags(Tag.New, Tag.Refurbished, Tag.Used);
 
-            context.Products.Add(newProduct);
+            context.Products.Add(product);
 
             context.SaveChanges();
 
-            ListProducts(context);
+            return productId;
+        }
+
+        private static void UpdateProduct(ProductId id, CatalogDbContext context)
+        {
+            var product = context.Products.Find(id);
+
+            product.UpdateDetails(new ProductDetails(new Name("Updated name"), new Description("Updated description")));
+
+            product.AddImage(new ImageUrl("foo"));
+
+            product.SetTags(Tag.New);
+
+            product.Rate(new Rating(10));
+
+            context.SaveChanges();
         }
 
         private static void ListProducts(CatalogDbContext context)
@@ -40,8 +67,6 @@
             {
                 Console.WriteLine(product.ToString());
             }
-
-            Console.Read();
         }
 
         private static ProductId GetNextProductId(DbContext context)

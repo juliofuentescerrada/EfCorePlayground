@@ -8,7 +8,7 @@
         private ProductDetails _details;
         private Rating _rating;
         private ICollection<ImageUrl> _images = new List<ImageUrl>();
-        private ICollection<Tag> _tags = new List<Tag>();
+        private Tags _tags;
 
         private Product() { }
 
@@ -27,6 +27,11 @@
             return $"{Id} - {_details}: Rating {_rating}";
         }
 
+        public void UpdateDetails(ProductDetails details)
+        {
+            _details = details;
+        }
+
         public void AddImage(ImageUrl imageUrl)
         {
             _images.Add(imageUrl);
@@ -34,7 +39,12 @@
 
         public void SetTags(params Tag[] tags)
         {
-            _tags = new List<Tag>(tags);
+            _tags = new Tags(tags);
+        }
+
+        public void Rate(Rating rating)
+        {
+            _rating = rating;
         }
     }
 }
