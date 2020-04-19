@@ -3,7 +3,6 @@
     using System;
     using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
-    using Model;
     using Model.Product;
     using System.Data;
     using System.Linq;

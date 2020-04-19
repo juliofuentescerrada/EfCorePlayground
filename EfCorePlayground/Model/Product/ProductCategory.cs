@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using EfCorePlayground.Framework;
-
-namespace EfCorePlayground.Model.Product
+﻿namespace EfCorePlayground.Model.Product
 {
     using Category;
+    using Framework;
+    using System;
+    using System.Collections.Generic;
 
     public class ProductCategory: ValueObject<ProductCategory>
     {

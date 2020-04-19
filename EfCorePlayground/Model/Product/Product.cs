@@ -1,26 +1,26 @@
-﻿using System.Linq;
-
-namespace EfCorePlayground.Model.Product
+﻿namespace EfCorePlayground.Model.Product
 {
     using Brand;
+    using Category;
     using Framework;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Product : Entity<ProductId>
     {
         private ProductDetails _details;
         private Rating _rating;
-        private ICollection<Image> _images = new HashSet<Image>();
-        private ICollection<Tag> _tags = new HashSet<Tag>();
-
         private BrandId _brandId;
         private Review _review;
+
+        private ICollection<Image> _images = new HashSet<Image>();
+        private ICollection<Tag> _tags = new HashSet<Tag>();
         private ICollection<Comment> _comments = new HashSet<Comment>();
         private ICollection<ProductCategory> _categories = new HashSet<ProductCategory>();
 
         private Product() { }
 
-        public static Product Create(ProductId productId, ProductDetails details, Brand brand, params Category.Category[] categories)
+        public static Product Create(ProductId productId, ProductDetails details, Brand brand, params Category[] categories)
         {
             var product = new Product
             {

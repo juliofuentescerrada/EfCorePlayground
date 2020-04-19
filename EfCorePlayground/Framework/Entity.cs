@@ -1,14 +1,8 @@
 ﻿namespace EfCorePlayground.Framework
 {
-    using System.Collections.Generic;
-
     public class Entity<T>
     {
         public T Id { get; protected set; }
-
-        private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
-        public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
-        public void ClearEvents() => _domainEvents.Clear();
 
         public override bool Equals(object obj)
         {
@@ -46,7 +40,5 @@
         {
             return (GetType().ToString() + Id).GetHashCode();
         }
-
-        protected void AddDomainEvent(IDomainEvent newEvent) => _domainEvents.Add(newEvent);
     }
 }

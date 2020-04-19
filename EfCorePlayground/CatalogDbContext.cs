@@ -1,10 +1,8 @@
-﻿using EfCorePlayground.Model.Brand;
-using EfCorePlayground.Model.Category;
-
-namespace EfCorePlayground
+﻿namespace EfCorePlayground
 {
     using Microsoft.EntityFrameworkCore;
-    using Model;
+    using Model.Brand;
+    using Model.Category;
     using Model.Product;
     using System.Linq;
 

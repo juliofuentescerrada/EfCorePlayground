@@ -7,10 +7,7 @@
     {
         private readonly int? _value;
 
-        public Rating(int? value)
-        {
-            _value = value;
-        }
+        public Rating(int? value) => _value = value;
 
         public override string ToString()
         {

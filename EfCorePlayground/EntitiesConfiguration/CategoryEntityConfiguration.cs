@@ -1,9 +1,9 @@
-﻿using EfCorePlayground.Model.Category;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace EfCorePlayground.EntitiesConfiguration
+﻿namespace EfCorePlayground.EntitiesConfiguration
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Model.Category;
+
     public class CategoryEntityConfiguration: IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)

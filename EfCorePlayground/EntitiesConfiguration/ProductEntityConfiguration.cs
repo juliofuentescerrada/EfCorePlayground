@@ -1,9 +1,9 @@
-﻿using EfCorePlayground.Model.Brand;
-
+﻿
 namespace EfCorePlayground.EntitiesConfiguration
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Model.Brand;
     using Model.Product;
 
     public class ProductEntityConfiguration : IEntityTypeConfiguration<Product>

@@ -1,10 +1,10 @@
-﻿using EfCorePlayground.Model.Category;
-using EfCorePlayground.Model.Product;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace EfCorePlayground.EntitiesConfiguration
+﻿namespace EfCorePlayground.EntitiesConfiguration
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Model.Category;
+    using Model.Product;
+
     public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCategory>
     {
         public void Configure(EntityTypeBuilder<ProductCategory> builder)

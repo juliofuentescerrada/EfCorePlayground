@@ -11,15 +11,9 @@
 
         private readonly string _value;
 
-        public Tag(string value)
-        {
-            _value = value;
-        }
+        public Tag(string value) => _value = value;
 
-        public override string ToString()
-        {
-            return _value;
-        }
+        public override string ToString() => _value;
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

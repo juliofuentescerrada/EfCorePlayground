@@ -16,10 +16,7 @@
             _description = description;
         }
 
-        public override string ToString()
-        {
-            return $"{_name} - {_description}";
-        }
+        public override string ToString() => $"{_name} - {_description}";
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
