@@ -15,8 +15,8 @@ namespace EfCorePlayground.Model.Product
 
         private BrandId _brandId;
         private Review _review;
-        private ICollection<Comment> _comments = new List<Comment>();
-        private ICollection<ProductCategory> _categories = new List<ProductCategory>();
+        private ICollection<Comment> _comments = new HashSet<Comment>();
+        private ICollection<ProductCategory> _categories = new HashSet<ProductCategory>();
 
         private Product() { }
 
@@ -27,7 +27,7 @@ namespace EfCorePlayground.Model.Product
                 Id = productId,
                 _details = details,
                 _brandId = brand.Id,
-                _categories = categories?.Select(category => new ProductCategory(category.Id)).ToList()
+                _categories = categories?.Select(category => new ProductCategory(category.Id)).ToHashSet()
             };
 
             return product;

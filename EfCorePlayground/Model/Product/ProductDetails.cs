@@ -5,8 +5,8 @@
 
     public class ProductDetails : ValueObject<ProductDetails>
     {
-        private Name _name;
-        private Description _description;
+        private readonly Name _name;
+        private readonly Description _description;
 
         private ProductDetails() { }
 
