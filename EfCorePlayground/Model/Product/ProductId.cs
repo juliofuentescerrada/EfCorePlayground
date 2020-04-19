@@ -1,20 +1,22 @@
-﻿namespace EfCorePlayground.Model
+﻿namespace EfCorePlayground.Model.Product
 {
     using Framework;
     using System.Collections.Generic;
 
-    public class Rating : ValueObject<Rating>
+    public class ProductId : ValueObject<ProductId>
     {
-        private readonly int? _value;
+        private readonly int _value;
 
-        public Rating(int? value)
+        public ProductId(int value)
         {
             _value = value;
         }
 
+        public static explicit operator int(ProductId id) => id._value;
+
         public override string ToString()
         {
-            return _value.HasValue ? _value.ToString() : "pending";
+            return _value.ToString();
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

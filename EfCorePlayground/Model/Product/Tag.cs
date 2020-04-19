@@ -1,4 +1,4 @@
-﻿namespace EfCorePlayground.Model
+﻿namespace EfCorePlayground.Model.Product
 {
     using Framework;
     using System.Collections.Generic;

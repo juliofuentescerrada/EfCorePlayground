@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using Model;
+    using Model.Product;
 
     public class ProductEntityConfiguration : IEntityTypeConfiguration<Product>
     { 
@@ -29,10 +30,10 @@
                 .IsRequired(false)
                 .HasColumnName(nameof(Rating)));
 
-            builder.OwnsMany<ImageUrl>("_images", images => images.ToTable("ProductImages")
+            builder.OwnsMany<Image>("_images", images => images.ToTable("ProductImages")
                 .Property<string>("_value")
                 .IsRequired()
-                .HasColumnName(nameof(ImageUrl)));
+                .HasColumnName(nameof(Image)));
 
             builder.OwnsMany<Tag>("_tags", tags => tags.ToTable("ProductTags")
                 .Property<string>("_value")

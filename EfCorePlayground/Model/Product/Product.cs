@@ -1,14 +1,27 @@
-﻿namespace EfCorePlayground.Model
+﻿namespace EfCorePlayground.Model.Product
 {
+    using Brand;
+    using Category;
+    using Family;
     using Framework;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Product : Entity<ProductId>
     {
         private ProductDetails _details;
         private Rating _rating;
-        private ICollection<ImageUrl> _images = new HashSet<ImageUrl>();
+        private ICollection<Image> _images = new HashSet<Image>();
         private ICollection<Tag> _tags = new HashSet<Tag>();
+
+        private Brand _brand;
+
+        private ICollection<Category> _categories = new List<Category>();
+        public IEnumerable<Category> Categories => _categories.ToList();
+
+        private ICollection<ProductFamily> _families = new List<ProductFamily>();
+        public IEnumerable<Family> Families => _families.Select(e => e.Family).ToList();
+
 
         private Product() { }
 
@@ -32,7 +45,7 @@
             _details = details;
         }
 
-        public void AddImage(ImageUrl imageUrl)
+        public void AddImage(Image imageUrl)
         {
             _images.Add(imageUrl);
         }

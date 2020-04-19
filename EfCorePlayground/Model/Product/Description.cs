@@ -1,13 +1,13 @@
-﻿namespace EfCorePlayground.Model
+﻿namespace EfCorePlayground.Model.Product
 {
     using Framework;
     using System.Collections.Generic;
 
-    public class Name : ValueObject<Name>
+    public class Description : ValueObject<Description>
     {
         private readonly string _value;
 
-        public Name(string value)
+        public Description(string value)
         {
             _value = value;
         }

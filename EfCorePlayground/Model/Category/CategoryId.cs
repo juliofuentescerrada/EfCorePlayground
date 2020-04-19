@@ -1,20 +1,23 @@
-﻿namespace EfCorePlayground.Model
+﻿namespace EfCorePlayground.Model.Category
 {
     using Framework;
+    using Product;
     using System.Collections.Generic;
 
-    public class Description : ValueObject<Description>
+    public class CategoryId : ValueObject<CategoryId>
     {
-        private readonly string _value;
+        private readonly int _value;
 
-        public Description(string value)
+        public CategoryId(int value)
         {
             _value = value;
         }
 
+        public static explicit operator int(ProductId id) => id._value;
+
         public override string ToString()
         {
-            return _value;
+            return _value.ToString();
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

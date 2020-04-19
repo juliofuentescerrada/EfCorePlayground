@@ -4,6 +4,7 @@
     using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
     using Model;
+    using Model.Product;
     using System.Data;
     using System.Linq;
 
@@ -33,7 +34,7 @@
 
             var product = Product.Create(productId, details, new Rating(null));
 
-            product.AddImage(new ImageUrl("foo"));
+            product.AddImage(new Image("foo"));
 
             product.Tag(Tag.New, Tag.Refurbished, Tag.Used, Tag.New, Tag.Refurbished);
 
@@ -50,7 +51,7 @@
 
             product.UpdateDetails(new ProductDetails(new Name("Updated name"), new Description("Updated description")));
 
-            product.AddImage(new ImageUrl("foo"));
+            product.AddImage(new Image("foo"));
 
             product.Tag(Tag.New, Tag.New);
 

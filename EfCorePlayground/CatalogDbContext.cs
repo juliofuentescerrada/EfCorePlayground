@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Model;
+    using Model.Product;
     using System.Linq;
 
     public class CatalogDbContext : DbContext

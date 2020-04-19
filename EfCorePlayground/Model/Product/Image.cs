@@ -1,23 +1,20 @@
-﻿namespace EfCorePlayground.Model
+﻿namespace EfCorePlayground.Model.Product
 {
     using Framework;
-    using System;
     using System.Collections.Generic;
 
-    public class ProductId : ValueObject<ProductId>
+    public class Image : ValueObject<Description>
     {
-        private readonly int _value;
+        private readonly string _value;
 
-        public ProductId(int value)
+        public Image(string value)
         {
             _value = value;
         }
 
-        public static explicit operator int(ProductId id) => id._value;
-
         public override string ToString()
         {
-            return _value.ToString();
+            return _value;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
