@@ -84,15 +84,14 @@ namespace EfCorePlayground.Migrations
 
             modelBuilder.Entity("EfCorePlayground.Model.Product.ProductCategory", b =>
                 {
-                    b.Property<int>("_productId")
-                        .HasColumnName("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("_categoryId")
                         .HasColumnName("CategoryId")
                         .HasColumnType("int");
 
-                    b.HasKey("_productId", "_categoryId");
+                    b.HasKey("ProductId", "_categoryId");
 
                     b.HasIndex("_categoryId");
 
@@ -251,15 +250,15 @@ namespace EfCorePlayground.Migrations
 
             modelBuilder.Entity("EfCorePlayground.Model.Product.ProductCategory", b =>
                 {
-                    b.HasOne("EfCorePlayground.Model.Category.Category", null)
-                        .WithMany()
-                        .HasForeignKey("_categoryId")
+                    b.HasOne("EfCorePlayground.Model.Product.Product", null)
+                        .WithMany("_categories")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EfCorePlayground.Model.Product.Product", null)
-                        .WithMany("_categories")
-                        .HasForeignKey("_productId")
+                    b.HasOne("EfCorePlayground.Model.Category.Category", null)
+                        .WithMany()
+                        .HasForeignKey("_categoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

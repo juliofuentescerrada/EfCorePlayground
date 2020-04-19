@@ -9,19 +9,17 @@ namespace EfCorePlayground.EntitiesConfiguration
     {
         public void Configure(EntityTypeBuilder<ProductCategory> builder)
         {
-            builder.Property<ProductId>("_productId")
-                .HasColumnName(nameof(ProductId))
-                .HasConversion(id => (int)id, i => new ProductId(i));
+            builder.Property<ProductId>(nameof(ProductId));
 
             builder.Property<CategoryId>("_categoryId")
                 .HasColumnName(nameof(CategoryId))
                 .HasConversion(id => (int)id, i => new CategoryId(i));
 
-            builder.HasKey("_productId", "_categoryId");
-
-            builder.HasOne<Product>().WithMany("_categories").HasForeignKey("_productId");
+            builder.HasOne<Product>().WithMany("_categories").HasForeignKey(nameof(ProductId));
             
             builder.HasOne<Category>().WithMany().HasForeignKey("_categoryId");
+
+            builder.HasKey(nameof(ProductId), "_categoryId");
 
             builder.ToTable("ProductCategories");
         }

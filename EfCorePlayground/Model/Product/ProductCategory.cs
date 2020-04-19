@@ -1,17 +1,16 @@
-﻿namespace EfCorePlayground.Model.Product
+﻿using System;
+
+namespace EfCorePlayground.Model.Product
 {
     using Category;
+
     public class ProductCategory
     {
-        private ProductId _productId;
         private CategoryId _categoryId;
 
-        private ProductCategory() { }
-
-        public ProductCategory(Product product, Category category)
+        public ProductCategory(CategoryId categoryId)
         {
-            _productId = product.Id;
-            _categoryId = category.Id;
+            _categoryId = categoryId ?? throw new ArgumentNullException(nameof(categoryId));
         }
     }
 }

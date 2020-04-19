@@ -26,10 +26,9 @@ namespace EfCorePlayground.Model.Product
             {
                 Id = productId,
                 _details = details,
-                _brandId = brand.Id
+                _brandId = brand.Id,
+                _categories = categories?.Select(category => new ProductCategory(category.Id)).ToList()
             };
-
-            product._categories = categories?.Select(category => new ProductCategory(product, category)).ToList();
 
             return product;
         }
