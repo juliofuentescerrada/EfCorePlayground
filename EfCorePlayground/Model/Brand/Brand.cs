@@ -8,10 +8,11 @@
 
         private Brand() { }
 
-        public static Brand Create(string name)
+        public static Brand Create(BrandId id, string name)
         {
             return new Brand
             {
+                Id = id,
                 Name = name
             };
         }

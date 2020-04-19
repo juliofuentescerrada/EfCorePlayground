@@ -2,16 +2,10 @@
 
 namespace EfCorePlayground.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateSequence(
-                name: "brands_id_sequence");
-
-            migrationBuilder.CreateSequence(
-                name: "categories_id_sequence");
-
             migrationBuilder.CreateSequence(
                 name: "products_id_sequence");
 
@@ -61,7 +55,7 @@ namespace EfCorePlayground.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
+                name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -71,9 +65,9 @@ namespace EfCorePlayground.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_Products_ProductId",
+                        name: "FK_Comments_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -84,21 +78,21 @@ namespace EfCorePlayground.Migrations
                 name: "ProductCategories",
                 columns: table => new
                 {
-                    _productId = table.Column<int>(nullable: false),
-                    _categoryId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductCategories", x => new { x._productId, x._categoryId });
+                    table.PrimaryKey("PK_ProductCategories", x => new { x.ProductId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_ProductCategories_Categories__categoryId",
-                        column: x => x._categoryId,
+                        name: "FK_ProductCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductCategories_Products__productId",
-                        column: x => x._productId,
+                        name: "FK_ProductCategories_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -145,34 +139,34 @@ namespace EfCorePlayground.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
+                name: "Reviews",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(nullable: true),
-                    ProductId = table.Column<int>(nullable: true)
+                    ProductId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Review", x => x.Id);
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Review_Products_ProductId",
+                        name: "FK_Reviews_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_ProductId",
-                table: "Comment",
+                name: "IX_Comments_ProductId",
+                table: "Comments",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductCategories__categoryId",
+                name: "IX_ProductCategories_CategoryId",
                 table: "ProductCategories",
-                column: "_categoryId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_BrandId",
@@ -180,17 +174,16 @@ namespace EfCorePlayground.Migrations
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_ProductId",
-                table: "Review",
+                name: "IX_Reviews_ProductId",
+                table: "Reviews",
                 column: "ProductId",
-                unique: true,
-                filter: "[ProductId] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "ProductCategories");
@@ -202,7 +195,7 @@ namespace EfCorePlayground.Migrations
                 name: "ProductTags");
 
             migrationBuilder.DropTable(
-                name: "Review");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -212,12 +205,6 @@ namespace EfCorePlayground.Migrations
 
             migrationBuilder.DropTable(
                 name: "Brands");
-
-            migrationBuilder.DropSequence(
-                name: "brands_id_sequence");
-
-            migrationBuilder.DropSequence(
-                name: "categories_id_sequence");
 
             migrationBuilder.DropSequence(
                 name: "products_id_sequence");

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EfCorePlayground.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20200419114900_initial")]
-    partial class initial
+    [Migration("20200419143103_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,8 +19,6 @@ namespace EfCorePlayground.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("Relational:Sequence:.brands_id_sequence", "'brands_id_sequence', '', '1', '1', '', '', 'Int64', 'False'")
-                .HasAnnotation("Relational:Sequence:.categories_id_sequence", "'categories_id_sequence', '', '1', '1', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.products_id_sequence", "'products_id_sequence', '', '1', '1', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -67,7 +65,7 @@ namespace EfCorePlayground.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("EfCorePlayground.Model.Product.Product", b =>
@@ -75,12 +73,13 @@ namespace EfCorePlayground.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("BrandId")
+                    b.Property<int>("_brandId")
+                        .HasColumnName("BrandId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("_brandId");
 
                     b.ToTable("Products");
                 });
@@ -88,9 +87,11 @@ namespace EfCorePlayground.Migrations
             modelBuilder.Entity("EfCorePlayground.Model.Product.ProductCategory", b =>
                 {
                     b.Property<int>("_productId")
+                        .HasColumnName("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("_categoryId")
+                        .HasColumnName("CategoryId")
                         .HasColumnType("int");
 
                     b.HasKey("_productId", "_categoryId");
@@ -110,16 +111,15 @@ namespace EfCorePlayground.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId")
-                        .IsUnique()
-                        .HasFilter("[ProductId] IS NOT NULL");
+                        .IsUnique();
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("EfCorePlayground.Model.Product.Comment", b =>
@@ -133,9 +133,9 @@ namespace EfCorePlayground.Migrations
 
             modelBuilder.Entity("EfCorePlayground.Model.Product.Product", b =>
                 {
-                    b.HasOne("EfCorePlayground.Model.Brand.Brand", "_brand")
+                    b.HasOne("EfCorePlayground.Model.Brand.Brand", null)
                         .WithMany()
-                        .HasForeignKey("BrandId")
+                        .HasForeignKey("_brandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -253,14 +253,14 @@ namespace EfCorePlayground.Migrations
 
             modelBuilder.Entity("EfCorePlayground.Model.Product.ProductCategory", b =>
                 {
-                    b.HasOne("EfCorePlayground.Model.Category.Category", "_category")
+                    b.HasOne("EfCorePlayground.Model.Category.Category", null)
                         .WithMany()
                         .HasForeignKey("_categoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EfCorePlayground.Model.Product.Product", "_product")
-                        .WithMany()
+                    b.HasOne("EfCorePlayground.Model.Product.Product", null)
+                        .WithMany("_categories")
                         .HasForeignKey("_productId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -270,7 +270,9 @@ namespace EfCorePlayground.Migrations
                 {
                     b.HasOne("EfCorePlayground.Model.Product.Product", null)
                         .WithOne("_review")
-                        .HasForeignKey("EfCorePlayground.Model.Product.Review", "ProductId");
+                        .HasForeignKey("EfCorePlayground.Model.Product.Review", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

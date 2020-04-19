@@ -1,4 +1,6 @@
-﻿namespace EfCorePlayground.Model.Product
+﻿using System.Linq;
+
+namespace EfCorePlayground.Model.Product
 {
     using Brand;
     using Framework;
@@ -11,26 +13,30 @@
         private ICollection<Image> _images = new HashSet<Image>();
         private ICollection<Tag> _tags = new HashSet<Tag>();
 
-        private Brand _brand;
+        private BrandId _brandId;
         private Review _review;
-        private ICollection<Comment> _comments;
-        private ICollection<ProductCategory> _categories;
+        private ICollection<Comment> _comments = new List<Comment>();
+        private ICollection<ProductCategory> _categories = new List<ProductCategory>();
 
         private Product() { }
 
-        public static Product Create(ProductId productId, ProductDetails details, Rating rating)
+        public static Product Create(ProductId productId, ProductDetails details, Brand brand, params Category.Category[] categories)
         {
-            return new Product
+            var product = new Product
             {
                 Id = productId,
                 _details = details,
-                _rating = rating
+                _brandId = brand.Id
             };
+
+            product._categories = categories?.Select(category => new ProductCategory(product, category)).ToList();
+
+            return product;
         }
 
         public override string ToString()
         {
-            return $"{Id} - {_details}: Rating {_rating}. Tags: {_tags}";
+            return $"{Id} - {_details}: Rating {_rating}. Tags: {string.Join(",", _tags)}";
         }
 
         public void UpdateDetails(ProductDetails details)
@@ -51,6 +57,16 @@
         public void Rate(Rating rating)
         {
             _rating = rating;
+        }
+
+        public void SetReview(Review review)
+        {
+            _review = review;
+        }
+
+        public void AddComment(Comment comment)
+        {
+            _comments.Add(comment);
         }
     }
 }

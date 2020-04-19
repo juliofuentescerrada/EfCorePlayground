@@ -22,8 +22,8 @@ namespace EfCorePlayground
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasSequence("products_id_sequence");
-            modelBuilder.HasSequence("brands_id_sequence");
-            modelBuilder.HasSequence("categories_id_sequence");
+            modelBuilder.Entity<Comment>().ToTable("Comments");
+            modelBuilder.Entity<Review>().ToTable("Reviews");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
         }
     }
@@ -36,6 +36,22 @@ namespace EfCorePlayground
             {
                 dbContext.Database.Migrate();
             }
+
+            if (!dbContext.Brands.Any())
+            {
+                dbContext.Brands.Add(Brand.Create(new BrandId(1), "Razer"));
+                dbContext.Brands.Add(Brand.Create(new BrandId(2), "Logitech"));
+                dbContext.Brands.Add(Brand.Create(new BrandId(3), "Corsair"));
+            }
+
+            if (!dbContext.Categories.Any())
+            {
+                dbContext.Categories.Add(Category.Create(new CategoryId(1), "Home"));
+                dbContext.Categories.Add(Category.Create(new CategoryId(2), "Gaming"));
+                dbContext.Categories.Add(Category.Create(new CategoryId(3), "Professional"));
+            }
+
+            dbContext.SaveChanges();
         }
     }
 }

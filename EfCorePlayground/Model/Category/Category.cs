@@ -7,10 +7,11 @@
         public string Name { get; private set; }
         private Category() { }
 
-        public static Category Create(string name)
+        public static Category Create(CategoryId id, string name)
         {
             return new Category
             {
+                Id = id,
                 Name = name
             };
         }

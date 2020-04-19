@@ -11,13 +11,16 @@ namespace EfCorePlayground.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasKey(p => p.Id);
-            builder.Property(e => e.Id).HasConversion(id => (int)id, i => new ProductId(i));
-
-            builder.HasOne<Brand>("_brand").WithMany().HasForeignKey("BrandId").IsRequired();
-
-            builder.HasOne<Review>("_review").WithOne().HasForeignKey<Review>("ProductId");
             
-            builder.HasMany<Comment>("_comments").WithOne().HasForeignKey("ProductId").IsRequired();
+            builder.Property(e => e.Id).HasConversion(id => (int)id, id => new ProductId(id));
+
+            builder.Property<BrandId>("_brandId").HasColumnName(nameof(BrandId));
+
+            builder.HasOne<Brand>().WithMany().HasForeignKey("_brandId").IsRequired();
+
+            builder.HasOne<Review>("_review").WithOne().IsRequired().HasForeignKey<Review>(nameof(ProductId));
+            
+            builder.HasMany<Comment>("_comments").WithOne().IsRequired().HasForeignKey(nameof(ProductId));
 
             builder.OwnsOne<ProductDetails>("_details", details =>
             {

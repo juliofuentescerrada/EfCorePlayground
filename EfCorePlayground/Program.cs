@@ -13,6 +13,7 @@
         public static void Main(string[] args)
         {
             using var context = new CatalogDbContext();
+
             CatalogDbContextDbContextInitializer.Seed(context);
 
             var id = CreateProduct(context);
@@ -28,15 +29,23 @@
 
         private static ProductId CreateProduct(CatalogDbContext context)
         {
+            var brand = context.Brands.ToList().Last();
+
+            var categories = context.Categories.ToList();
+
             var productId = GetNextProductId(context);
 
             var details = new ProductDetails(new Name("Name"), null);
 
-            var product = Product.Create(productId, details, new Rating(null));
-
-            product.AddImage(new Image("foo"));
+            var product = Product.Create(productId, details, brand, categories.ToArray());
 
             product.Tag(Tag.New, Tag.Refurbished, Tag.Used, Tag.New, Tag.Refurbished);
+
+            product.SetReview(new Review { Content = "Lorem ipsum" });
+
+            product.AddComment(new Comment { Content = "Nice!" });
+
+            product.AddImage(new Image("foo"));
 
             context.Products.Add(product);
 
@@ -47,13 +56,17 @@
 
         private static void UpdateProduct(ProductId id, CatalogDbContext context)
         {
-            var product = context.Products.Find(id);
+            var product = context.Products.Single(e => e.Id == id);
 
-            product.UpdateDetails(new ProductDetails(new Name("Updated name"), new Description("Updated description")));
+            var details = new ProductDetails(new Name("Updated name"), new Description("Updated description"));
 
-            product.AddImage(new Image("foo"));
+            product.UpdateDetails(details);
 
             product.Tag(Tag.New, Tag.New);
+
+            product.AddComment(new Comment { Content = "Awesome!" });
+
+            product.AddImage(new Image("bar"));
 
             product.Rate(new Rating(10));
 
