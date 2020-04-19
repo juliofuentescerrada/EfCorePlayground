@@ -46,6 +46,8 @@
 
             product.AddImage(new Image("foo"));
 
+            product.Rate(new Rating(null));
+
             context.Products.Add(product);
 
             context.SaveChanges();
@@ -74,7 +76,12 @@
 
         private static void ListProducts(CatalogDbContext context)
         {
-            var products = context.Products.ToList();
+            var products = context.Products
+                .Include("_categories")
+                .Include("_comments")
+                .Include("_review")
+                .AsNoTracking()
+                .ToList();
 
             foreach (var product in products)
             {
