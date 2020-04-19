@@ -1,16 +1,23 @@
-﻿namespace EfCorePlayground.EntitiesConfiguration
+﻿using EfCorePlayground.Model.Brand;
+
+namespace EfCorePlayground.EntitiesConfiguration
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Model;
     using Model.Product;
 
     public class ProductEntityConfiguration : IEntityTypeConfiguration<Product>
-    { 
+    {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasKey(p => p.Id);
-            builder.Property(e => e.Id).HasConversion(id => (int) id, i => new ProductId(i));
+            builder.Property(e => e.Id).HasConversion(id => (int)id, i => new ProductId(i));
+
+            builder.HasOne<Brand>("_brand").WithMany().HasForeignKey("BrandId").IsRequired();
+
+            builder.HasOne<Review>("_review").WithOne().HasForeignKey<Review>("ProductId");
+            
+            builder.HasMany<Comment>("_comments").WithOne().HasForeignKey("ProductId").IsRequired();
 
             builder.OwnsOne<ProductDetails>("_details", details =>
             {

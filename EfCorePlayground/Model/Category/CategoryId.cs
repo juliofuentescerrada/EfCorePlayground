@@ -13,7 +13,7 @@
             _value = value;
         }
 
-        public static explicit operator int(ProductId id) => id._value;
+        public static explicit operator int(CategoryId id) => id._value;
 
         public override string ToString()
         {

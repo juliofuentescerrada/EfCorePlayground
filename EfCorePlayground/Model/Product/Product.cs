@@ -1,11 +1,8 @@
 ﻿namespace EfCorePlayground.Model.Product
 {
     using Brand;
-    using Category;
-    using Family;
     using Framework;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class Product : Entity<ProductId>
     {
@@ -15,13 +12,9 @@
         private ICollection<Tag> _tags = new HashSet<Tag>();
 
         private Brand _brand;
-
-        private ICollection<Category> _categories = new List<Category>();
-        public IEnumerable<Category> Categories => _categories.ToList();
-
-        private ICollection<ProductFamily> _families = new List<ProductFamily>();
-        public IEnumerable<Family> Families => _families.Select(e => e.Family).ToList();
-
+        private Review _review;
+        private ICollection<Comment> _comments;
+        private ICollection<ProductCategory> _categories;
 
         private Product() { }
 

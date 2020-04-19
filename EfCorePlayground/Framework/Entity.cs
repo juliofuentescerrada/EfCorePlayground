@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class Entity<T> where T : ValueObject<T>
+    public class Entity<T>
     {
         public T Id { get; protected set; }
 

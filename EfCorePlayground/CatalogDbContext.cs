@@ -1,4 +1,7 @@
-﻿namespace EfCorePlayground
+﻿using EfCorePlayground.Model.Brand;
+using EfCorePlayground.Model.Category;
+
+namespace EfCorePlayground
 {
     using Microsoft.EntityFrameworkCore;
     using Model;
@@ -8,6 +11,8 @@
     public class CatalogDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -17,6 +22,8 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasSequence("products_id_sequence");
+            modelBuilder.HasSequence("brands_id_sequence");
+            modelBuilder.HasSequence("categories_id_sequence");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
         }
     }
