@@ -32,9 +32,9 @@
 
             var categories = context.Categories.ToList();
 
-            var productId = GetNextProductId(context);
+            var productId = NextIdentity(context);
 
-            var details = new ProductDetails(new Name("Name"), null);
+            var details = new ProductDetails(new Name("Name"), new Description(null));
 
             var product = Product.Create(productId, details, brand, categories.ToArray());
 
@@ -89,15 +89,13 @@
             }
         }
 
-        private static ProductId GetNextProductId(DbContext context)
+        private static ProductId NextIdentity(DbContext context)
         {
             var result = new SqlParameter("@result", SqlDbType.Int) { Direction = ParameterDirection.Output };
 
             context.Database.ExecuteSqlRaw("SELECT @result = (NEXT VALUE FOR products_id_sequence)", result);
 
-            var productId = new ProductId((int)result.Value);
-
-            return productId;
+            return new ProductId((int)result.Value);
         }
     }
 }
